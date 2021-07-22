@@ -5,7 +5,7 @@ local AF = Window:NewTab("Auto-Farm")
 local Section = AF:NewSection("Auto-Click")
 
 Section:NewToggle("Auto-Clicker", "Clicks for you", function(state)
-    getgenv().autoTap = true
+getgenv().autoTap = true
 
         local clickMod = require(game:GetService("Players").LocalPlayer.PlayerScripts.Aero.Controllers.UI.Click)
         
@@ -39,7 +39,14 @@ end)
 local Pets = Window:NewTab("Pets")
 local Eggs = Pets:NewSection("Eggs")
 
-Eggs:NewDropdown("Select an egg", "choose an egg to buy", {"basic", "valentines", "lava"}, function(selectedEgg)
+local eggTable = {} 
+for _,v in pairs(game:GetService("ReplicatedStorage").EggObjects:GetChildren()) do
+ if (v:FindFirstChildWhichIsA("Part") and not table.find(eggTable, v.Name)) then
+   table.insert(eggTable, v.Name)
+ end
+end
+
+Eggs:NewDropdown("Select an egg", "choose an egg to buy", eggTable, function(selectedEgg)
 local Event = game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.EggService.Purchase
 Event:FireServer(selectedEgg)
 end)
@@ -48,79 +55,33 @@ end)
 local Tp = Window:NewTab("TP")
 local World = Tp:NewSection("Worlds")
 
-World:NewButton("Spawn", "I'm a lazy dumpling", function()
+local worldTable = {}
+for _,v in pairs(workspace.Worlds:GetChildren()) do
+   if not table.find(worldTable, v.Name) then
+       table.insert(worldTable, v.Name)
+   end
+end
+
+local selectedWorld
+World:NewDropdown("Select a World", "Select a World for Teleportation", worldTable, function(value)
+    print(value)
+    selectedWorld = value
+end)
+
+
+World:NewButton("Tp to World", "teleport to the selected world", function()
+if selectedWorld then
+       teleportWorld(selectedWorld)
+   end
+end)
+
+World:NewButton("Spawn", "It's like it's not the world, but I think that the world", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(510.252136, 8.94383812, -332.205658, 0.917312562, 0, 0.398167908, 0, 1, 0, -0.398167908, 0, 0.917312562)
 end)
 
-World:NewButton("VIP", "I'm a lazy dumpling", function()
+World:NewButton("VIP", "It's like a world", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(518.599976, 15.5010281, -1342.40002, -0.998631716, 0, 0.0522932447, 0, 1, 0, -0.0522932447, 0, -0.998631716)
 end)
-
-World:NewButton("Lava", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1690.38525, 7.77716637, -734.648865, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Desert", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2288.66113, 7.36253929, 1087.66602, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Ocean", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-258.018005, 9.72535324, 2065.25439, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Winter", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2195.28003, 6.46062994, 409.998016, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Toxic", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1677.47485, 8.72548485, -2042.55005, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Candy", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1418.74072, 9.27518654, -2243.14648, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Forest", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1838.47925, 8.35549545, 3260.10547, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Storm", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-283.451447, 8.89227104, -2593.82104, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Blocks", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2997.47729, 11.1703444, -782.602905, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Space", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2394.43408, 7.40711641, 2861.37256, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Dominus", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1114.78931, 8.35549545, 2254.00562, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Infinity", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2160.427, 8.20108604, -1764.58118, 0.917312562, 0, 0.398167908, 0, 1, 0, -0.398167908, 0, 0.917312562)
-end)
-
-World:NewButton("Future", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1142.82349, 9.54701519, 519.403564, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("City", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-888.616638, 7.70115376, 1026.44592, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Moon", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2394.43408, 7.40711641, 1899.26257, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-World:NewButton("Fire", "I'm a lazy dumpling", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2192.76514, 7.77716637, -734.648865, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-
-
 
 local Misc = Window:NewTab("Misc")
 local LOL = Misc:NewSection("Misc")
@@ -137,5 +98,21 @@ end)
 LOL:NewKeybind("Keybind", "Keybind", Enum.KeyCode.F, function()
 	Library:ToggleUI()
 end)
+
+---Functions
+function teleportTO(placeCFrame)
+    local plyr = game.Players.LocalPlayer
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = placeCFrame
+    end
+ end
+ 
+ function teleportWorld(world)
+    if game:GetService("Workspace").Worlds:FindFirstChild(world) then
+        teleportTO(game:GetService("Workspace").Worlds[world].Teleport.CFrame)
+    end
+ end
+ 
+
 
 
