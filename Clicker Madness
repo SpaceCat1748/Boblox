@@ -32,6 +32,10 @@ Kek:NewButton("Collect", "colect gems and taps", function()
     end
 end)
 
+Kek:NewButton("Destroy VIP Purchase Notice", "destroys the VIP purchase notification", function()
+    game:GetService("Workspace").ScriptObjects.VIPPortal.Trigger:Destroy(v)
+end)
+
 local Pets = Window:NewTab("Pets")
 local Eggs = Pets:NewSection("Eggs")
 
@@ -133,6 +137,5 @@ end)
 LOL:NewKeybind("Keybind", "Keybind", Enum.KeyCode.F, function()
 	Library:ToggleUI()
 end)
-
 
 
