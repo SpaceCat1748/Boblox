@@ -5,9 +5,9 @@ local AF = Window:NewTab("Auto-Farm")
 local Section = AF:NewSection("Auto-Click")
 
 Section:NewToggle("Auto-Clicker", "Clicks for you", function(state)
-getgenv().autoTap = true
+local clickMod = require(game:GetService("Players").LocalPlayer.PlayerScripts.Aero.Controllers.UI.Click)
+getgenv().autoTap = state
 
-        local clickMod = require(game:GetService("Players").LocalPlayer.PlayerScripts.Aero.Controllers.UI.Click)
         
 spawn(function()
     while autoTap do
@@ -16,14 +16,15 @@ spawn(function()
          end
      end)
 end)
-local Section = AF:NewSection("No Auto-Rebirth")
-Section:NewButton("Give Gamepass Auto-Rebirth and Hatch 3 Eggs", "Gives free gamepassess", function()
+local Auf = AF:NewSection("No Auto-Rebirth")
+Auf:NewButton("Give Gamepass Auto-Rebirth and Hatch 3 Eggs", "Gives free gamepassess", function()
     local gamepassMod = require(game:GetService("ReplicatedStorage").Aero.Shared.Gamepasses)
     gamepassMod.HasPassOtherwisePrompt = function() return true end
 end)
 
 local Kek = AF:NewSection("Auto-Collect")
-Kek:NewButton("Collect", "colect gems and taps", function()
+
+Kek:NewButton("Collect Method FireTouch (Use Krnl)", "colect gems and taps", function()
     for i,v in pairs(game:GetService("Workspace").ScriptObjects:GetDescendants()) do
         if v.Name == "TouchInterest" then
             firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
@@ -46,16 +47,46 @@ for _,v in pairs(game:GetService("ReplicatedStorage").EggObjects:GetChildren()) 
  end
 end
 
-Eggs:NewDropdown("Select an egg", "choose an egg to buy", eggTable, function(selectedEgg)
-local Event = game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.EggService.Purchase
-Event:FireServer(selectedEgg)
+local selectedEgg
+Eggs:NewDropdown("Select an egg", "choose an egg to buy", eggTable, function(value)
+    selectedEgg = value
+    print(value)
 end)
 
+
+Eggs:NewToggle("Auto-Buy 1 Egg", "auto-buying 1 egg", function(state)
+    getgenv().auto1Egg = state
+
+spawn(function()
+    while auto1Egg do
+        local Event = game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.EggService.Purchase
+        Event:FireServer(selectedEgg)
+         wait(0.5)
+        end
+    end)
+end)
+
+Eggs:NewToggle("Auto-Buy Triple Eggs", "auto-buying tripple eggs", function(state)
+    local gamepassMod = require(game:GetService("ReplicatedStorage").Aero.Shared.Gamepasses)
+    gamepassMod.HasPassOtherwisePrompt = function() return true end
+    getgenv().auto3egg = state
+    
+
+
+spawn(function()
+    while auto3egg do
+        wait(0.1)
+           local Event = game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.EggService.PurchaseTriple
+           Event:FireServer(selectedEgg)
+           wait(0.3)
+           end
+    end)
+ end)
 
 local Tp = Window:NewTab("TP")
 local World = Tp:NewSection("Worlds")
 
-local worldTable = {}
+worldTable = {}
 for _,v in pairs(workspace.Worlds:GetChildren()) do
    if not table.find(worldTable, v.Name) then
        table.insert(worldTable, v.Name)
@@ -83,6 +114,27 @@ World:NewButton("VIP", "It's like a world", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(518.599976, 15.5010281, -1342.40002, -0.998631716, 0, 0.0522932447, 0, 1, 0, -0.0522932447, 0, -0.998631716)
 end)
 
+local Players = Tp:NewSection("Tp to Players")
+
+local playertable = {}
+for _,v in pairs(game.Players:GetChildren()) do
+if not table.find(playertable, v.Name) then
+table.insert(playertable, v.Name)
+end
+end
+
+
+local selectedplayer
+Players:NewDropdown("Select Player for TP", "I do not know why this function is needed, well, let it be.", playertable, function(value)
+    selectedplayer = value
+    print(value)
+end)
+
+Players:NewButton("Tp to Player", "I do not know why this function is needed, well, let it be.", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[selectedplayer].Character.HumanoidRootPart.CFrame
+end)
+
+
 local Misc = Window:NewTab("Misc")
 local LOL = Misc:NewSection("Misc")
 
@@ -105,14 +157,13 @@ function teleportTO(placeCFrame)
     if plyr.Character then
         plyr.Character.HumanoidRootPart.CFrame = placeCFrame
     end
- end
+end
  
  function teleportWorld(world)
     if game:GetService("Workspace").Worlds:FindFirstChild(world) then
         teleportTO(game:GetService("Workspace").Worlds[world].Teleport.CFrame)
     end
- end
- 
+end
 
 
 
