@@ -8,4 +8,6 @@ elseif game.PlaceId == 8554378337 then
    loadstring(game:HttpGet("https://raw.githubusercontent.com/ZaRdoOx/weapon-figting/main/Weapon-Fighting-Simulator"))()
 elseif game.PlaceId == 8781849572 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/SpaceCat1748/Boblox/main/Star%20Sim%20beta.lua"))()
+elseif game.PlaceId == 7708751418 then
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/SunkenMuch/Soggyware/main/Main',true))()
 end
