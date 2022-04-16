@@ -49,6 +49,6 @@ player:Button("Normal WalkSpeed", function()
     speed:Change(15)
 end)
 
-local jump = player:Slider("JumpPower", 0, 1000, 400, function(v)
+local jump = player:Slider("JumpPower(not working)", 0, 1000, 400, function(v)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
 end)
