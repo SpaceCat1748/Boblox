@@ -1,5 +1,5 @@
 if game.PlaceId == 6284583030 then
-    loadstring(game:HttpGet"https://rawscripts.net/raw/Project-Meow_421")()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKix/nullptrpsx/main/psxloadstring.lua"))()
 elseif game.PlaceId == 1537690962 then
    loadstring(game:HttpGet("https://raw.githubusercontent.com/infinitylua/Luascripts/main/KJFsdEj8sXrja.lua"))()
 elseif game.PlaceId == 7305309231 then 
