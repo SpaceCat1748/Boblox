@@ -13,7 +13,7 @@ elseif game.PlaceId == 7708751418 then
 elseif game.PlaceId == 9049840490 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Sonic%20Speed%20Simulator/main.lua", true))() -- Sonic Speed Simulator
 elseif game.PlaceId == 2202352383 then
-    loadstring(game:HttpGet("https://www.toptal.com/developers/hastebin/raw/akugugako"))() -- Super Power Training Simulator
+    loadstring(game:HttpGet('https://pastebin.com/raw/D9btNZUr', true))() -- Super Power Training Simulator
 elseif game.PlaceId == 6299805723 then 
     loadstring(game.HttpGet(game, "https://raw.githubusercontent.com/KiJinGaming/FreeScript/main/KJHub.lua"))() -- Anime Fighters Simulator
 elseif game.PlaceId == 8982709021 then
