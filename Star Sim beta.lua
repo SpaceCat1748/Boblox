@@ -41,15 +41,15 @@ end)
 
 local teleport = serv:Channel("TP")
 
-playerTable = {}
-for _,v in pairs(game:GetService("Players"):GetChildren()) do
-   if not table.find(playerTable, v.Name) then
-       table.insert(playerTable, v.Name)
-   end
+local playertable = {}
+for _,v in pairs(game.Players:GetChildren()) do
+if not table.find(playertable, v.Name) then
+table.insert(playertable, v.Name)
+end
 end
 
 local selectedplayer
-teleport:Dropdown("Select Player to TP", playerTable, function(value)
+teleport:Dropdown("Select Player to TP", playertable, function(value)
     print(value)
     selectedplayer = value
 end)
