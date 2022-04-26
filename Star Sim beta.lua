@@ -39,6 +39,26 @@ guns:Button("Unlock the whole island", function()
     end
 end)
 
+local teleport = serv:Channel("TP")
+
+playerTable = {}
+for _,v in pairs(game:GetService("Players")GetChildren()) do
+   if not table.find(playerTable, v.Name) then
+       table.insert(playerTable, v.Name)
+   end
+end
+
+local selectedplayer
+teleport:Dropdown("Select Player to TP", playerTable, function(value)
+    print(value)
+    selectedplayer = value
+end)
+
+teleport:Button("TP to selected player", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[selectedplayer].Character.HumanoidRootPart.CFrame
+end)
+
+
 local player = serv:Channel("Player's Scripts")
 
 local speed = player:Slider("WalkSpeed", 0, 1000, 400, function(v)
@@ -51,4 +71,8 @@ end)
 
 local jump = player:Slider("JumpPower(not working)", 0, 1000, 400, function(v)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+player:Button("Infinte Yield", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
 end)
