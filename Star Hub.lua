@@ -25,4 +25,6 @@ elseif game.PlaceId == 8982709021 then
             })
 wait(0.1)
     loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Scripts/main/YouTube%20Life/Auto%20Farm.lua"))() -- YouTube Life!
+elseif game.PlaceId == 9300407930 then
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/BadScripter/Scripts/master/BotClashHub.lua",true))() -- Bot Clash!
 end
