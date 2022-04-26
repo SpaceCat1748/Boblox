@@ -42,7 +42,7 @@ end)
 local teleport = serv:Channel("TP")
 
 playerTable = {}
-for _,v in pairs(game:GetService("Players")GetChildren()) do
+for _,v in pairs(game:GetService("Players"):GetChildren()) do
    if not table.find(playerTable, v.Name) then
        table.insert(playerTable, v.Name)
    end
