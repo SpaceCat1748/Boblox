@@ -31,7 +31,7 @@ local p = game:GetService("Players").LocalPlayer
 ts:Teleport(game.PlaceId, p)
 end)
 
-guns:Button("Unlock All island", function()
+guns:Button("Unlock the whole island", function()
     for _, player in next, game.Players:GetChildren() do
         for _, land in next, workspace["Star_"..player.Name].Player.Land:GetChildren() do
             game.ReplicatedStorage.PlayerData.Unlocker.LandShow:FireServer(land)
