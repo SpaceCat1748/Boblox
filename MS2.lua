@@ -19,7 +19,7 @@ end
 
 local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
 
-local win = DiscordLib:Window("Germ Simulator (in work) | SpaceCat#1748")
+local win = DiscordLib:Window("Mining Simulator 2 | SpaceCat#1748")
 
 local serv = win:Server("Lol", "")
 
