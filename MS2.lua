@@ -17,13 +17,17 @@ function tp(...)
   ):Play()
 end
 
+local function SellBlocks()
+   game:GetService("ReplicatedStorage").Events.Teleport:FireServer("SurfaceSell")
+end
+
 local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
 
 local win = DiscordLib:Window("Mining Simulator 2 | SpaceCat#1748")
 
 local serv = win:Server("Lol", "")
 
-local guns = serv:Channel("Farm")
+local guns = serv:Channel("Farming")
 
 local selectedplayer
 guns:Dropdown("Select Chest to TP", {"Wood","Silver","Gold","Epic","Legendary"}, function(value)
@@ -48,6 +52,33 @@ wait()
 end
 end)
 
+guns:Toggle("Auto Mine", false, function(state)
+
+getgenv().mine = state
+
+if mine then
+while wait() do 
+a = string.gsub(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.ScreenGui.HUD.Debug.Debug9.Label.Text,"Selected Cell: <font color='rgb","")
+            b = string.gsub(a,"</font>","")
+            c = string.gsub(b,"(150, 255, 255)","")
+            d = string.gsub(c,",","")
+            e = string.gsub(d,"'","")
+            f = string.sub(e,4,99)
+            local args = {
+                [1] = Vector3.new(string.split(f, " ")[1],string.split(f, " ")[2],string.split(f, " ")[3])
+            }
+            game:GetService("ReplicatedStorage").Events.MineBlock:FireServer(unpack(args))
+end
+end
+end)
+
+guns:Button("Sell", function()
+ spawn(function()
+       SellBlocks()
+   end)
+end)
+
+
 local misc = serv:Channel("Misc")
 
 misc:Button("Anti Afk", function()
@@ -68,4 +99,4 @@ end)
 
 misc:Button("copy my discord", function()
 setclipboard("SpaceCat#1748")
-end)
+end)    
