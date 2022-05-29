@@ -31,17 +31,12 @@ guns:Dropdown("Select Chest to TP", {"Wood","Silver","Gold","Epic","Legendary"},
     selectedplayer = value
 end)
 
-guns:Toggle("Auto Farm (very Buggy)",false, function(state)
-getgenv().chest = state
-
-while chest do
+guns:Button("Tween TP to Chest", function()
 for i,v in pairs(game:GetService("Workspace").Chests:GetChildren()) do
     if v.Name == selectedplayer then -- Change the name to "Wood", "Silver", "Gold", "Epic" or "Legendary"
       tp(game:GetService("Workspace").Chests[selectedplayer].Part.Position)
-      wait()
- end
- end
- end
+end
+end
 end)
 
 guns:Toggle("Auto Jump", false, function(state)
@@ -51,4 +46,26 @@ while jump do
 game.Players.LocalPlayer.Character.Humanoid.Jump = true
 wait()
 end
+end)
+
+local misc = serv:Channel("Misc")
+
+misc:Button("Anti Afk", function()
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+end)
+
+misc:Button("All codes redeem", function()
+local code = game.ReplicatedStorage.Functions.RedeemCode
+code:InvokeServer("Release")
+wait(0.1)
+code:InvokeServer("FreeEgg")
+end)
+
+misc:Button("copy my discord", function()
+setclipboard("SpaceCat#1748")
 end)
