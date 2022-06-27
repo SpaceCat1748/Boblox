@@ -1,0 +1,110 @@
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window("Tapping Simulator | SpaceCat#1748")
+
+local serv = win:Server("Lol", "")
+
+local guns = serv:Channel("General")
+
+guns:Label("Made by SpaceCat especially for scriptrb.com")
+
+guns:Toggle("Auto Tap",false, function(state)
+    getgenv().Autotap = state 
+
+while Autotap do
+local Event = game:GetService("ReplicatedStorage").Events.Tap
+Event:InvokeServer()
+wait()
+end
+end)
+
+local rebirth
+guns:Textbox("Number of rebirth", "", "", function (value)
+    print(value)
+    rebirth = value
+end)
+
+guns:Toggle("Auto Rebirth",false, function(state)
+    getgenv().autor = state 
+
+while autor do
+local A_1 = rebirth
+local Event = game:GetService("ReplicatedStorage").Events.Rebirth
+Event:FireServer(A_1)
+wait()
+end
+end)
+
+guns:Toggle("Auto Daily Reward",false, function(state)
+    getgenv().dailyreward = state 
+
+while dailyreward do
+local Event = game:GetService("ReplicatedStorage").Events.OpenDailyReward
+Event:InvokeServer()
+wait()
+end
+end)
+
+guns:Button("Reedem all codes", function()
+local A_1 = "release"
+local Event = game:GetService("ReplicatedStorage").Events.ClaimCode
+Event:FireServer(A_1)
+wait(0.1)
+local A_1 = "testing"
+local Event = game:GetService("ReplicatedStorage").Events.ClaimCode
+Event:FireServer(A_1)
+end)
+
+local A_1 = 1
+local Event = game:GetService("ReplicatedStorage").Events.Rebirth
+Event:FireServer(A_1)
+
+
+
+local tp = serv:Channel("TP")
+
+tp:Button("Spawn", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-193.5059356689453, 12.376481056213379, -461.6901550292969)
+end)
+
+tp:Button("Forest Island", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-165.23585510253906, 977.2162475585938, -399.0157775878906)
+end)
+
+tp:Button("Flower Island", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-179.45693969726562, 1514.4510498046875, -686.1478881835938)
+end)
+
+tp:Button("Swamp Island", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-264.3505859375, 2113.3916015625, -698.1581420898438)
+end)
+
+tp:Button("Snow Island", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-204.6865692138672, 2512.45068359375, -472.2171936035156)
+end)
+
+tp:Button("Desert Island", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-165.15203857421875, 3340.94970703125, -778.5193481445312)
+end)
+
+tp:Button("Death Island", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-278.87506103515625, 4382.38818359375, -479.46533203125)
+end)
+
+local player = serv:Channel("Player Mods")
+
+local speed = player:Slider("WalkSpeed", 0, 1000, 400, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+
+player:Toggle("Infinity Jump",false, function(state)
+    InfiniteJumpEnabled = state
+game:GetService("UserInputService").JumpRequest:connect(function()
+	if InfiniteJumpEnabled then
+		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+	end
+end)
+end)
+
+
+
