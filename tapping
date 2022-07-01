@@ -53,13 +53,56 @@ wait(0.1)
 local A_1 = "testing"
 local Event = game:GetService("ReplicatedStorage").Events.ClaimCode
 Event:FireServer(A_1)
+wait(0.1)
+local A_1 = "update1"
+local Event = game:GetService("ReplicatedStorage").Events.ClaimCode
+Event:FireServer(A_1)
 end)
 
-local A_1 = 1
-local Event = game:GetService("ReplicatedStorage").Events.Rebirth
-Event:FireServer(A_1)
+local eggs = serv:Channel("Eggs")
 
+eggsTable = {}
+for _,v in pairs(game:GetService("Workspace").Shops:GetChildren()) do
+   if not table.find(eggsTable, v.Name) then
+       table.insert(eggsTable, v.Name)
+   end
+end
 
+local selectedegg
+eggs:Dropdown("Select Egg", eggsTable, function(value)
+    print(value)
+    selectedegg = value
+end)
+
+eggs:Toggle("Auto Buy Eggs",false, function(state)
+    getgenv().egg = state
+
+while egg do
+local A_1 = 
+{
+}
+local A_2 = selectedegg
+local A_3 = 1
+local Event = game:GetService("ReplicatedStorage").Events.HatchEgg
+Event:InvokeServer(A_1, A_2, A_3)
+wait()
+end
+end)
+
+eggs:Toggle("Auto Buy Tripple Eggs",false, function(state)
+    getgenv().eggtripple = state
+
+while eggtripple do
+    local A_1 = 
+    {
+    }
+    local A_2 = selectedegg
+    local A_3 = 3
+    local Event = game:GetService("ReplicatedStorage").Events.HatchEgg
+    Event:InvokeServer(A_1, A_2, A_3)
+wait()
+end
+end)
 
 local tp = serv:Channel("TP")
 
@@ -91,6 +134,14 @@ tp:Button("Death Island", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-278.87506103515625, 4382.38818359375, -479.46533203125)
 end)
 
+tp:Button("Beach Island", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-137.31251525878906, 5778.986328125, -496.0212097167969)
+end)
+
+tp:Button("Mine Island", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-240.7730255126953, 6976.685546875, -483.98919677734375)
+end)
+
 local player = serv:Channel("Player Mods")
 
 local speed = player:Slider("WalkSpeed", 0, 1000, 400, function(v)
@@ -105,6 +156,5 @@ game:GetService("UserInputService").JumpRequest:connect(function()
 	end
 end)
 end)
-
 
 
