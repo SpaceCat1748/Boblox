@@ -1,0 +1,47 @@
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window("Victory Race | SpaceCat#1748")
+
+local serv = win:Server("okay", "")
+
+local guns = serv:Channel("General")
+
+guns:Button("Equip 1 Aura", function()
+    local args = {
+        [1] = game:GetService("Players").LocalPlayer.Character
+    }
+    
+    game:GetService("ReplicatedStorage").AuraEvent:FireServer(unpack(args))
+end)
+
+guns:Button("Equip 2 Aura", function()
+    local args = {
+        [1] = game:GetService("Players").LocalPlayer.Character
+    }
+    
+    game:GetService("ReplicatedStorage").AuraEvent2:FireServer(unpack(args))
+end)
+
+guns:Button("Equip 3 Aura", function()
+    local args = {
+        [1] = game:GetService("Players").LocalPlayer.Character
+    }
+    
+    game:GetService("ReplicatedStorage").AuraEvent3:FireServer(unpack(args))
+end)
+
+guns:Button("Equip 4 Aura", function()
+    local args = {
+        [1] = game:GetService("Players").LocalPlayer.Character
+    }
+    
+    game:GetService("ReplicatedStorage").AuraEvent4:FireServer(unpack(args))
+end)
+
+guns:Button("Equip 5 Aura", function()
+    local args = {
+        [1] = game:GetService("Players").LocalPlayer.Character
+    }
+    
+    game:GetService("ReplicatedStorage").AuraEvent5:FireServer(unpack(args))
+end)
