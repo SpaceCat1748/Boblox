@@ -1,0 +1,85 @@
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window("Impossible Glass Bridge Obby! | SpaceCat#1748")
+
+local serv = win:Server("it's shit", "")
+
+local guns = serv:Channel("General")
+
+guns:Toggle("Auto-Del tiles",false, function(state)
+    getgenv().glass = state
+
+while glass do
+for _, cumsock in pairs(game:GetService("Workspace")["Glass Bridge"].GlassPane:GetDescendants()) do
+        if cumsock.Name == "1" then
+            if cumsock.CanCollide == false then
+                cumsock.Transparency = 1
+            end
+        end
+        if cumsock.Name == "2" then
+            if cumsock.CanCollide == false then
+                cumsock.Transparency = 1
+            end
+        end
+end
+wait()
+end
+end)
+
+guns:Toggle("Auto-Finish",false, function(state)
+    getgenv().autoObby = state -- change to false to toggle loop
+while autoObby do
+   local Finish = game:GetService("Workspace")["Glass Bridge"].Finish:FindFirstChild("TouchInterest", true).Parent
+   local pRoot = game.Players.LocalPlayer.Character.HumanoidRootPart
+   firetouchinterest(pRoot, Finish, 0)
+   firetouchinterest(pRoot, Finish, 1)
+wait(3.1)
+end
+end)
+
+
+local player = serv:Channel("Player Mods")
+
+
+player:Textbox("WalkSpeed", "Type here!", true, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+
+player:Textbox("JumpPower", "Type here!", true, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+player:Toggle("Infinity Jump",false, function(state)
+    InfiniteJumpEnabled = state
+game:GetService("UserInputService").JumpRequest:connect(function()
+	if InfiniteJumpEnabled then
+		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+	end
+end)
+end)
+
+local misc = serv:Channel("Misc")
+
+misc:Button("Anti-Afk", function()
+    local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+end)
+
+misc:Button("remove all gamepass stuff", function()
+    for i, v in pairs(game:GetService("Workspace").Pads:GetDescendants()) do -- remove gamepass spinners
+   if v:IsA("Model") then
+       v.Parent = game.Lighting
+   end
+end
+
+game:GetService("Workspace")["Become Squid Front Man"].Parent = game.Lighting -- remove become front man gamepass
+game:GetService("Workspace")["Become Squid Game Guard"].Parent = game.Lighting -- remove become guard gamepass
+
+game:GetService("Players").LocalPlayer.PlayerGui.Gamepass.Enabled = false -- remove gamepass gui
+end)
+
+
