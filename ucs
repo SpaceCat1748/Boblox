@@ -1,0 +1,53 @@
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window("Ultra Clicker Simulator | SpaceCat#1748")
+
+local serv = win:Server("it's shit", "")
+
+local guns = serv:Channel("General")
+
+guns:Toggle("Auto-Tap",false, function(state)
+    getgenv().Tap = state
+
+while Tap do
+    workspace.Events.AddClick:FireServer()
+wait()
+end
+end)
+
+guns:Toggle("Unlimited Gems",false, function(state)
+    getgenv().gems = state
+
+while gems do
+    local ohInstance1 = game:GetService("ReplicatedStorage").Code_Folder
+    local ohString2 = "FLOPPA"
+    game:GetService("Players").LocalPlayer.PlayerGui.Main.MainFrame.CodesFrame.RedeemButton["Redeem Button_Script"].Gems:FireServer(ohInstance1, ohString2)
+wait()
+end
+end)
+
+guns:Toggle("Unlimited Floppa",false, function(state)
+    getgenv().pets = state
+
+while pets do
+local ohInstance1 = game:GetService("ReplicatedStorage").Code_Folder
+local ohString2 = "FLOPPA"
+game:GetService("Players").LocalPlayer.PlayerGui.Main.MainFrame.CodesFrame.RedeemButton["Redeem Button_Script"].FreePet:FireServer(ohInstance1, ohString2)
+wait()
+end
+end)
+
+local misc = serv:Channel("Misc")
+
+misc:Textbox("WalkSpeed", "Type here!", true, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+
+misc:Button("Anti-Afk", function()
+    local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+end)
