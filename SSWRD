@@ -1,0 +1,204 @@
+local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+local player = game.Players.LocalPlayer
+
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort") then
+	game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort"):Remove()
+end
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPortNew") then
+	game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPortNew"):Remove()
+end
+
+eggsTable = {}
+for _,v in pairs(game:GetService("ReplicatedStorage").Eggs:GetChildren()) do
+   if not table.find(eggsTable, v.Name) then
+       table.insert(eggsTable, v.Name)
+   end
+end
+
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window(GetName.Name)
+
+local serv = win:Server("GUI", "")
+
+local btns = serv:Channel("Farm")
+
+btns:Label("Maded with love: SpaceCat#1748")
+
+btns:Toggle("Auto Candy Farm",false, function(state)
+getgenv().autocandy = state
+
+while autocandy do
+    player.Character.Humanoid:ChangeState("11")
+	for i,v in pairs(game:GetService("Workspace").CandyHolder:GetChildren()) do
+		if v.Name == "Candy" then
+			local CFrameEnd = CFrame.new(v.Position)
+			local Time = 2.5
+			local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
+			tween:Play()
+	    if v.Transparency == 1 then
+	    v:Destroy()
+		end
+	end
+end
+wait(1)
+end
+end)
+
+
+btns:Toggle("Auto Swing",false, function(state)
+getgenv().click = state
+
+while click do
+for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do 
+    if v.ClassName == "Tool" then 
+    game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+    end
+end
+game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").RemoteClick:FireServer()
+game:GetService("ReplicatedStorage").Events.Clicked:FireServer()
+wait()
+end
+end)
+
+
+btns:Toggle("Auto Sell",false, function(state)
+getgenv().sell = state
+
+
+
+while sell do
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(532.80011, 186.313126, 151.486023, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+player.Character.Humanoid.Jump = true
+wait(3)
+end
+end)
+
+btns:Toggle("Auto KOH",false, function(state)
+getgenv().koh = state
+
+while koh do
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(789.9238891601562, 249.77662658691406, 32.31357192993164)
+wait(1)
+end
+end)
+
+btns:Toggle("Auto Boss",false, function(state)
+getgenv().boss = state
+
+
+while boss do
+if game:GetService("Workspace"):FindFirstChild("Boss") then
+game.Players.LocalPlayer.Character.Humanoid:MoveTo(game:GetService("Workspace"):FindFirstChild("Boss").HumanoidRootPart.Position)
+for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do 
+    if v.ClassName == "Tool" then 
+    game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+    end
+end
+game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").RemoteClick:FireServer()
+game:GetService("ReplicatedStorage").Events.Clicked:FireServer()
+end
+if not game:GetService("Workspace"):FindFirstChild("Boss") then 
+local CoreGui = game:GetService("StarterGui")
+        CoreGui:SetCore("SendNotification", {
+		Title = "Warn";
+		Text = "Boss are dead or not spawned";
+		Duration = 5
+		})
+end
+wait()
+end
+end)
+
+local ab = serv:Channel("Auto-Buy")
+
+ab:Toggle("Auto-Buy Saber",false, function(state)
+getgenv().saber = state
+
+while saber do
+game:GetService("ReplicatedStorage").Events.BuyAll:FireServer("Swords")
+wait(1)
+end
+end)
+
+ab:Toggle("Auto Buy DNA",false, function(state)
+getgenv().dna = state
+
+while dna do
+game:GetService("ReplicatedStorage").Events.BuyAll:FireServer("Backpacks")
+wait()
+end
+end)
+
+ab:Toggle("Auto-Buy Jump",false, function(state)
+getgenv().jump = state
+
+while jump do
+game:GetService("ReplicatedStorage").Events.BuyAll:FireServer("JumpBoosts")
+wait()
+end
+end)
+
+ab:Toggle("Auto Buy Boss Hit",false, function(state)
+getgenv().hits = state
+
+while hits do
+game:GetService("ReplicatedStorage").Events.BuyAll:FireServer("BossBoosts")
+wait()
+end
+end)
+
+ab:Toggle("Auto-Buy Aura",false, function(state)
+getgenv().aura = state
+
+while aura do
+game:GetService("ReplicatedStorage").Events.BuyAll:FireServer("Auras")
+wait()
+end
+end)
+
+local egs = serv:Channel("Eggs")
+
+local selectedegg
+local ok = egs:Dropdown("Pick Egg",eggsTable , function(v)
+selectedegg = v
+end)
+
+egs:Toggle("Auto-Buy One Egg",false, function(state)
+getgenv().egg1 = state
+
+while egg1 do
+local A_1 = game:GetService("ReplicatedStorage").Eggs[selectedegg]
+local A_2 = 1
+local Event = game:GetService("ReplicatedStorage").Events.HatchEggs
+Event:InvokeServer(A_1, A_2)
+wait()
+end
+end)
+
+egs:Toggle("Auto-Buy Tripple Egg",false, function(state)
+getgenv().egg3 = state
+
+while egg3 do
+local A_1 = game:GetService("ReplicatedStorage").Eggs[selectedegg]
+local A_2 = 3
+local Event = game:GetService("ReplicatedStorage").Events.HatchEggs
+Event:InvokeServer(A_1, A_2)
+wait()
+end
+end)
+
+
+local msc = serv:Channel("Misc")
+
+msc:Textbox("Max Double Jumps", "Type here!", true, function(v)
+game:GetService("Players").LocalPlayer.PlayerScripts["Double Jump"].MaxJumps.Value = v
+end)
+
+msc:Textbox("WalkSpeed", "Type here!", true, function(v)
+game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+
+msc:Textbox("JumpPower", "Type here!", true, function(v)
+game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = v
+end)
