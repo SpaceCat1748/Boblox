@@ -1,0 +1,34 @@
+function Callback(answer)
+    if answer == "WRD" then
+        local CoreGui = game:GetService("StarterGui")
+        CoreGui:SetCore("SendNotification", {
+		Title = "Thanks";
+		Text = "Launched version for WRD";
+		Duration = 5;
+		})
+		wait(2)
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/SpaceCat1748/Boblox/main/SSWRD"))()
+    elseif answer == "Krnl" then
+        local CoreGui = game:GetService("StarterGui")
+        CoreGui:SetCore("SendNotification", {
+		Title = "Thanks";
+		Text = "Launched Version for Krnl";
+		Duration = 5;
+		})
+		wait(2)
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/SpaceCat1748/Boblox/main/SSKRNL"))()
+    end
+end
+
+local Bindable = Instance.new("BindableFunction")
+Bindable.OnInvoke = Callback
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Select Version";
+    Text = "For script";
+    Duration = "300";
+    Button1 = "Krnl";
+    Button2 = "WRD";
+    Icon = "rbxassetid://7635712200";
+    Callback = Bindable
+})
