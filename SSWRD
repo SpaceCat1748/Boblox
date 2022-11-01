@@ -2,10 +2,19 @@ local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceI
 local player = game.Players.LocalPlayer
 
 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort") then
-	game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort"):Remove()
+    game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort"):Remove()
 end
 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPortNew") then
-	game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPortNew"):Remove()
+    game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPortNew"):Remove()
+end
+
+local function Notif(title, text, dur)
+local CoreGui = game:GetService("StarterGui")
+        CoreGui:SetCore("SendNotification", {
+        Title = title;
+        Text = text;
+        Duration = dur
+        })
 end
 
 eggsTable = {}
@@ -30,20 +39,41 @@ getgenv().autocandy = state
 
 while autocandy do
     player.Character.Humanoid:ChangeState("11")
-	for i,v in pairs(game:GetService("Workspace").CandyHolder:GetChildren()) do
-		if v.Name == "Candy" then
-			local CFrameEnd = CFrame.new(v.Position)
-			local Time = 2.5
-			local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
-			tween:Play()
-	    if v.Transparency == 1 then
-	    v:Destroy()
-		end
-	end
+    for i,v in pairs(game:GetService("Workspace").CandyHolder:GetChildren()) do
+        if v.Name == "Candy" then
+            local CFrameEnd = CFrame.new(v.Position)
+            local Time = 1.5
+            local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
+            tween:Play()
+        if v.Transparency == 1 then
+        v:Destroy()
+        end
+    end
 end
 wait(1)
 end
 end)
+
+btns:Toggle("Auto Coin Farm",false, function(state)
+getgenv().coin = state
+
+while coin do
+    player.Character.Humanoid:ChangeState("11")
+    for i,v in pairs(game:GetService("Workspace").CoinsHolder:GetChildren()) do
+        if v.Name == "Coin" then
+            local CFrameEnd = CFrame.new(v.Position)
+            local Time = 1.5
+            local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
+            tween:Play()
+        if v.Transparency == 1 then
+        v:Destroy()
+        end
+    end
+end
+wait(1)
+end
+end)
+
 
 
 btns:Toggle("Auto Swing",false, function(state)
@@ -65,12 +95,13 @@ end)
 btns:Toggle("Auto Sell",false, function(state)
 getgenv().sell = state
 
-
-
 while sell do
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(532.80011, 186.313126, 151.486023, -1, 0, 0, 0, 1, 0, 0, 0, -1)
-player.Character.Humanoid.Jump = true
-wait(3)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(532.7999877929688, 185.9442901611328, 151.48599243164062)
+local Event = game:GetService("ReplicatedStorage").Events.Sell
+Event:FireServer()
+local Event1 = game:GetService("ReplicatedStorage").Events.UpdateData
+Event1:InvokeServer()
+wait()
 end
 end)
 
@@ -86,6 +117,8 @@ end)
 btns:Toggle("Auto Boss",false, function(state)
 getgenv().boss = state
 
+game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 50
+game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(372.38128662109375, 185.77545166015625, 161.83798217773438)
 
 while boss do
 if game:GetService("Workspace"):FindFirstChild("Boss") then
@@ -101,14 +134,71 @@ end
 if not game:GetService("Workspace"):FindFirstChild("Boss") then 
 local CoreGui = game:GetService("StarterGui")
         CoreGui:SetCore("SendNotification", {
-		Title = "Warn";
-		Text = "Boss are dead or not spawned";
-		Duration = 5
-		})
+        Title = "Warn";
+        Text = "Boss are dead or not spawned";
+        Duration = 2
+        })
 end
 wait()
 end
 end)
+
+
+btns:Toggle("Auto Flag",false, function(state)
+getgenv().pon = state
+
+while pon do
+for i, v in pairs(workspace.Flags:GetChildren()) do
+    if v.OwnerValue.Value ~= game:GetService("Players").LocalPlayer.Name then
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.Base.CFrame
+        wait(15 + v.CapValue.Value)
+        end
+    end
+end
+end)
+
+local mbs = serv:Channel("Mobs")
+
+local selectedgolem
+local ok2 = mbs:Dropdown("Pick Mob",{"Water Golem","Fire Golem","Earth Golem","Plasma Golem","Advanced Fire Boss", "Fire Boss", "Earth Boss", "Advanced Earth Boss", "Plasma Boss", "Advanced Plasma Boss", "Water Boss", "Advanced Water Boss"}, function(v)
+selectedgolem = v
+print(v)
+end)
+
+mbs:Toggle("Auto Farm Golem",false, function(state)
+getgenv().gol = state
+
+while gol do
+if game:GetService("Workspace").Mobs:FindFirstChild(selectedgolem) then
+    if game:GetService("Workspace").Mobs[selectedgolem]:FindFirstChild("HumanoidRootPart") then
+local CFrameEnd = CFrame.new(game:GetService("Workspace").Mobs[selectedgolem].HumanoidRootPart.Position)
+local Time = 1.5
+local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
+tween:Play()
+for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do 
+    if v.ClassName == "Tool" then 
+    game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+    end
+end
+game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").RemoteClick:FireServer()
+game:GetService("ReplicatedStorage").Events.Clicked:FireServer()
+else
+    Notif("Warn", "This mob don't have HumanoidRootPart.Try to enter the portal of this mob", 10)
+end
+end
+if not game:GetService("Workspace").Mobs:FindFirstChild(selectedgolem) then
+    Notif("Warn", "This mob is dead,please wait for it to spawn", 10)
+end
+wait()
+end
+end)
+
+mbs:Label("Possible Fix ,,This mob don't have HumanoidRootPart''")
+
+mbs:Button("Portal to Plasma World", function()
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(922.31689453125, 192.5361785888672, 64.88714599609375)
+end)
+
 
 local ab = serv:Channel("Auto-Buy")
 
@@ -157,6 +247,17 @@ wait()
 end
 end)
 
+ab:Toggle("Auto-Buy Classes",false, function(state)
+getgenv().classes = state
+
+while classes do
+for i,v in pairs(game:GetService("ReplicatedStorage").ShopItems.Classes:GetChildren()) do
+    game:GetService("ReplicatedStorage").Events.BuyItem:FireServer(v)
+end
+wait()
+end
+end)
+
 local egs = serv:Channel("Eggs")
 
 local selectedegg
@@ -164,7 +265,7 @@ local ok = egs:Dropdown("Pick Egg",eggsTable , function(v)
 selectedegg = v
 end)
 
-egs:Toggle("Auto-Buy One Egg",false, function(state)
+egs:Toggle("Auto-Buy Egg",false, function(state)
 getgenv().egg1 = state
 
 while egg1 do
@@ -175,19 +276,6 @@ Event:InvokeServer(A_1, A_2)
 wait()
 end
 end)
-
-egs:Toggle("Auto-Buy Tripple Egg",false, function(state)
-getgenv().egg3 = state
-
-while egg3 do
-local A_1 = game:GetService("ReplicatedStorage").Eggs[selectedegg]
-local A_2 = 3
-local Event = game:GetService("ReplicatedStorage").Events.HatchEggs
-Event:InvokeServer(A_1, A_2)
-wait()
-end
-end)
-
 
 local msc = serv:Channel("Misc")
 
