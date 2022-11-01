@@ -25,7 +25,7 @@ Bindable.OnInvoke = Callback
 
 game.StarterGui:SetCore("SendNotification", {
     Title = "Select Version";
-    Text = "For script";
+    Text = "For script(Now better use WRD ver)";
     Duration = "300";
     Button1 = "Krnl";
     Button2 = "WRD";
