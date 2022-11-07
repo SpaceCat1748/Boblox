@@ -1,0 +1,41 @@
+Тут мы разбираем локального игрока:
+
+game.Players.LocalPlayer или же game:GetService("Players").LocalPlayer но не суть
+
+game.Players.LocalPlayer:Kick("No reason") -- Кикает локального игрока по причине "No reason"
+это можно использовать например как проверку на неподходящий режим
+
+if game.PlaceId == 155615604 then -- Если айди режима равняется 155615604 тогда
+    print("Valid") -- Выведется "Valid"
+else -- Если же айди режима не будет равнятся 155615604 то
+    game.Players.LocalPlayer:Kick("Wrong Place") -- То Локального игрока кикнет по причине не правильный режим
+end
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame -- Координаты Основной части Хуманоида на основе этого сделаем небольшой скрипт,тут же нам может понадобится Lazy Dex либо Coordinates Grabber( loadstring(game:HttpGet("https://pastebin.com/raw/GdmzzrDz", true))() )
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").busstop.Part.CFrame -- Lazy Dex
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-383.3954772949219, 54.78105545043945, 1722.660888671875) -- Grabber 
+
+И у нас получился первый скрипт на телепорт
+
+Еще вариации телепорта:
+Tween TP(Не дектетится многими режимами), Moving(Вообще не является телепортом)
+
+Рассмотрим Tween TP
+local CFrameEnd = CFrame.new(-383.3954772949219, 54.78105545043945, 1722.660888671875) -- Переменная с Координатами
+local Time = 5 -- Переменная время с цифрой
+local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd}) --Создает анимацию движения
+tween:Play() -- Начать движение
+
+Рассмотрим Moving - Для автофарма неплохо но если это какой нибудь автофарм босса лучше конечно Тп Локального Игрока На арену
+
+game.Players.LocalPlayer.Character.Humanoid:MoveTo(game:GetService("Workspace").busstop.Part.Position)
+
+Изменяем Значения Cкорости
+
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100 -- Вместо 100 вводите свое значение(сбросит значение после смерти)
+
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100 -- Вместо 100 вводите свое Значение Высоты Прыжка
+
+Теперь преступаем к сладкому...
