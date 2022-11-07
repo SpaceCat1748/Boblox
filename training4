@@ -1,0 +1,74 @@
+На данном этапе будем разбираться с функциями и ремоутами и создадим свой автофарм
+
+буду рассматривать игру Saber Simulator:
+
+Для просмотра ремоутов нам понадобится специальный скрипт под названием Remote Spy loadstring(game:HttpGet("https://pastebin.com/raw/bCghX33W", true))()
+
+У нас появится меню и мы должны что нибудь сделать например помахать саблей и на основе этого уже можно сделать функцию Auto Swing и Можно с помощью граббера сделать AutoSell
+
+local function AutoS() -- функция С названием AutoS()
+      local Event = game:GetService("ReplicatedStorage").Events.Clicked
+      Event:FireServer() -- Действие
+end -- конец для функции
+
+local function AutoSell() -- функция С названием AutoSell()
+      game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(532.7915649414062, 183.83584594726562, 151.4871063232422) -- Действие (телепорт)
+end -- конец для функции
+
+AutoS()
+AutoSell() -- Отклик для функции
+
+Сделаем фармилку монеток
+
+local function Coins() --функция с названием Coins()
+      for i,v in pairs(game:GetService("Workspace").CoinsHolder:GetChildren()) do -- Достаем все предметы из Папки CoinsHolder
+          if v.Name == "Coin" then -- Если имя предмета из прошлого кода равно "Coin" тогда
+             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.CFrame) -- Местоположение Главной Части Хуманоида будет равно местоположению монеток
+            end
+      end
+end
+
+Давайте рассмотрим пример тайконов(я взял как пример Ultra Power Tycoon)
+
+Надо бы сделать функцию авто детекта названия нашего тайкона
+
+local function Owner() --функция овнер
+    for i,v in pairs(game:GetService("Workspace").Tycoons:GetChildren()) do -- Достаем Все названия тайконны из папки Tyccons
+        if v.isim.Value == game.Players.LocalPlayer.Name then -- Если значение Файла(В котором содержится наш ник) равен нашему нику тогда
+        return v -- Взять имя нашего тайкона										
+        end
+    end
+end
+
+print(Owner()) -- Показать название нашего тайкона
+
+Что бы сделать авто собиралку денег нам нужно поискать то за что и отвечает Собирание:
+
+В моем случае это находится в моделе CashRegister и ищем Часть с Touch Interest (https://i.ibb.co/HNzbRhd/Jabj4-FDr-YM.png)
+
+Мы нашли на основе этого можно сделать скрипт,тут покажет свое преимущество Krnl перед врд:
+
+local function Collect() -- функция с названием коллект
+    for i,v in pairs(Owner().CashRegister:GetDescendants()) do -- Достаем всё из OwnerТайкона и Модели КэшРегистр
+        if v.Name == "TouchInterest" then -- Если название триггера
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) -- Сделать фэйк затрагивание триггерра
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- Закончить фэйк затрагивание
+        end
+    end
+end
+
+Collect()
+
+Дойдя до 2ого этажа у нас появляется еще генераторы и еще 1 получалка денег
+так что делаем 2ой код 
+
+local function Collect2() -- функция с названием коллект2
+    for i,v in pairs(Owner():FindFirstChild("UltimaPad").CashRegister2:GetDescendants()) do -- Достаем всё из Ultima Pad(если есть)
+        if v.Name == "TouchInterest" then -- Если название триггера
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) -- Сделать фэйк затрагивание триггерра
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- Закончить фэйк затрагивание
+        end
+    end
+end
+
+В следующем этапе у нас уже будет графический интерфейс
