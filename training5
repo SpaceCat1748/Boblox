@@ -1,0 +1,125 @@
+Вот мы перейшли к Графическому интерфейсу(GUI)
+
+Если поискать в интернете то можно найти библиотеки с ui например: https://github.com/bloodball/UI-Librarys
+
+
+Я в основном рассматриваю Discord UI(Почему? - Ну выглядит ввиде дискорда,прикольно)
+
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window("test")
+
+local serv = win:Server("Pon", "")
+
+local tgls = serv:Channel("Auto Farming")
+
+tgls:Toggle("Auto-Farm",false, function(bool)
+    print("Enabled")
+end)
+
+Можно к этому скрипту добавить одну кастомную вещь это Взятие Названия Режима
+
+local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window(GetName.Name)
+
+local serv = win:Server("Pon", "")
+
+local tgls = serv:Channel("Auto Farming")
+
+tgls:Toggle("Auto-Collect",false, function(bool)
+    print("Enabled")
+end)
+
+
+И так займемся лупами а если точнее тоглом AutoCollect где будет все достаточно просто
+
+Используем функции из прошлого режима и у нас получится
+
+local function Owner() --функция овнер
+    for i,v in pairs(game:GetService("Workspace").Tycoons:GetChildren()) do -- Достаем Все тайконны из папки Tyccons
+        if v.isim.Value == game.Players.LocalPlayer.Name then -- Если значение Файла(В котором содержится наш ник) равен нашему нику тогда
+        return v -- Взять имя нашего тайкона										
+        end
+    end
+end
+
+
+local function Collect()
+    for i,v in pairs(Owner().CashRegister:GetDescendants()) do
+        if v.Name == "TouchInterest" then
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+        end
+    end
+end
+
+local function Collect2() -- функция с названием коллект2
+    for i,v in pairs(Owner():FindFirstChild("UltimaPad").CashRegister2:GetDescendants()) do -- Достаем всё из Ultima Pad
+        if v.Name == "TouchInterest" then -- Если название триггера
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) -- Сделать фэйк затрагивание триггерра
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- Закончить фэйк затрагивание
+        end
+    end
+end
+
+local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window(GetName.Name)
+
+local serv = win:Server("Pon", "")
+
+local tgls = serv:Channel("Auto Farming")
+
+tgls:Toggle("Auto-Collect",false, function(bool)
+    Collect2()
+    Collect()
+end)
+
+Чтобы все не было крашей мы сделаем луп
+
+tgls:Toggle("Auto-Collect",false, function(state)
+getgenv().autocoll = state -- Создаем переменную которая будет работать при переменной state(Когда тогл включен то state сменяется true и наоборот false)
+
+while autocoll do -- пока переменная будет делаться
+         Collect()
+         wait() -- Задержка
+     end
+end)
+
+tgls:Toggle("Auto-Collect Ultima",false, function(state)
+getgenv().autocoll = state -- Создаем переменную которая будет работать при переменной state(Когда тогл включен то state сменяется true и наоборот false)
+
+while autocoll do -- пока переменная будет делаться
+         Collect2()
+         wait() -- Задержка
+     end
+end)
+
+Давайте ка сделаем другой канал где будет антиафк и Текстовый бокс для изменения Силы Прыжка и Скорости
+
+local misc = serv:Channel("Misc") -- создает канал с названием микс
+
+misc:Textbox("WalkSpeed", "Type here!", true, function(v) -- текстовой бокс для изменения Скорости
+     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+
+misc:Textbox("JumpPower", "Type here!", true, function(v) -- текстовой бокс для изменения силы прыжка
+     game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+misc:Button("Anti-Afk", function()
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+end) -- https://i.ibb.co/9HhwcgS/image.png
+
+На этом всё что могу рассказать.Могу помочь писать в лс: SpaceCat#1748
+
