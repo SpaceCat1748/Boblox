@@ -1,0 +1,7 @@
+Будем "копать" с помощью скрипта Lazy Dex:
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/Lazy_Dex.lua"))()
+Желательно использовать на длл от крнл т.к будет крашить на других
+Итак у нас появляется меню с вкладками(https://i.ibb.co/XYKqW74/image.png)
+На данный момент нас интересует вкладка Workspace(Я проверяю в режиме Prison Life поэтому что то может отличаться)
+Мы можем наблюдать много моделей и папок
+Они нам понадобятся в пункте "Функции и Remotes"
