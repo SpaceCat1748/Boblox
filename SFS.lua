@@ -1,5 +1,7 @@
 local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
 
+local ok = {"Moving", "Tween", "TP"}
+
 local function Notif(title, text, dur)
 local CoreGui = game:GetService("StarterGui")
         CoreGui:SetCore("SendNotification", {
@@ -45,32 +47,121 @@ local tgls = serv:Channel("Auto-Farm")
 tgls:Label("Maded with love:SpaceCat1748,special for site scriptrb.com")
 
 tgls:Button("Verify Twitter", function()
-local A_1 = "petsimulatorx"
-local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.TwitterVerifyService.RF.Verify
-Event:InvokeServer(A_1)
+    local A_1 = "petsimulatorx"
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.TwitterVerifyService.RF.Verify
+    Event:InvokeServer(A_1)
+end)
+
+local selectedautofarm
+local drop = tgls:Dropdown("Pick Way for farm", ok, function(v)
+print(v)
+selectedautofarm = v
 end)
 
 tgls:Toggle("Auto-Farm Nearest",false, function(state)
 getgenv().af = state
 
-while wait() do 
+while wait() do
     if getgenv().af == true then
-        player.Character.Humanoid:MoveTo(getNearest().HumanoidRootPart.Position)
-end
-end
+        if selectedautofarm == nil then
+            Notif("Warn", "You not selected way for Farm", 10)
+            getgenv().af = false
+            break;
+        elseif selectedautofarm == "Moving" then
+            player.Character.Humanoid:MoveTo(getNearest().HumanoidRootPart.Position)
+        elseif selectedautofarm == "Tween" then
+            local CFrameEnd = CFrame.new(getNearest().HumanoidRootPart.Position)
+            local Time = 1
+            local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
+            tween:Play()
+        elseif selectedautofarm == "TP" then
+            player.Character.HumanoidRootPart.CFrame = getNearest().Head.CFrame * CFrame.new(0, 2, 0)
+        end
+    end
+    end
 end)
 
 
 tgls:Toggle("Auto-Click",false, function(state)
 getgenv().ac = state
 
-while ac do 
-local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
-Event:InvokeServer()
-local A_1 = getNearest().Name
-local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
-Event:InvokeServer(A_1)
+while wait() do
+    if getgenv().ac == true then 
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
+    Event:InvokeServer()
+    local A_1 = getNearest().Name
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
+    Event:InvokeServer(A_1)
+    local A_1 = getNearest().Name
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
+    Event:InvokeServer(A_1)
+    local A_1 = getNearest().Name
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
+    Event:InvokeServer(A_1)
+    local A_1 = getNearest().Name
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
+    Event:InvokeServer(A_1)
+    local A_1 = getNearest().Name
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
+    Event:InvokeServer(A_1)
+    local A_1 = getNearest().Name
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
+    Event:InvokeServer(A_1)
+    wait()
+    end
+    end
+end)
+
+tgls:Toggle("Auto-Collect Coins",false, function(state)
+getgenv().acc = state
+
+while acc do 
+for i,v in pairs(game:GetService("Workspace").Live.Pickups:GetChildren()) do
+    if v.Name == "Currency" then
+        v.CanCollide = true
+        v.CFrame = player.Character.HumanoidRootPart.CFrame
+    end
+end
 wait()
+end
+end)
+
+tgls:Toggle("Auto-Ascend",false, function(state)
+getgenv().aa = state
+
+while aa do 
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.AscendService.RF.Ascend
+    Event:InvokeServer()
+    wait()
+    end
+end)
+
+tgls:Toggle("Auto-Buy Area",false, function(state)
+getgenv().aba = state
+
+while aba do 
+    for i,v in pairs(game:GetService("Workspace").Resources.Teleports:GetChildren()) do
+        if v.ClassName == "Folder" then
+            local A_1 = v.Name
+            game:GetService("ReplicatedStorage").Packages.Knit.Services.AreaService.RF.BuyArea:InvokeServer(A_1)
+        end
+    end
+    wait()
+    end
+end)
+
+tgls:Toggle("Auto-Quest",false, function(state)
+getgenv().aq = state
+
+while aq do 
+    for i,v in pairs(game:GetService("Workspace").Resources.Teleports:GetChildren()) do
+        if v.ClassName == "Folder" then
+            local A_1 = v.Name
+            local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.QuestService.RF.ActionQuest
+            Event:InvokeServer(A_1)
+        wait()
+    end
+end
 end
 end)
 
@@ -115,7 +206,7 @@ while au do
 end)
 
 
-local egg = serv:Channel("Eggs")
+local egg = serv:Channel("Eggs,Sword and Pets")
 
 itemTable = {}
 for _,v in pairs(game:GetService("Workspace").Resources.EggStands:GetChildren()) do
@@ -144,7 +235,44 @@ while abe do
     end
 end)
 
+egg:Label("Pets")
 
+egg:Toggle("Auto-Equip Best Pet",false, function(state)
+getgenv().aep = state
+
+while aep do
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.PetInvService.RF.EquipBest
+    Event:InvokeServer()
+    wait()
+    end
+end)
+
+egg:Label("Sword")
+
+egg:Toggle("Auto-Forge",false, function(state)
+getgenv().af = state
+
+while af do
+    for i,v in pairs(game:GetService("Players").NekitPro139.PlayerGui.WeaponInv.Background.ImageFrame.Window.WeaponHolder.WeaponScrolling:GetChildren()) do
+        if v.ClassName == "Frame" then
+            local A_1 = v.Name
+            local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ForgeService.RF.Forge
+            Event:InvokeServer(A_1)
+      end
+      end
+    wait()
+    end
+end)
+
+egg:Toggle("Auto-Equip Best Sword",false, function(state)
+getgenv().aes = state
+
+while aes do
+    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.WeaponInvService.RF.EquipBest
+    Event:InvokeServer()
+    wait()
+    end
+end)
 
 local textbs = serv:Channel("Misc")
 
