@@ -11,11 +11,41 @@ local CoreGui = game:GetService("StarterGui")
         })
 end
 
+
+local function Quest()
+for i,v in pairs(game:GetService("Workspace").Resources.Teleports:GetChildren()) do
+        if v.ClassName == "Folder" then
+            local A_1 = v.Name
+            local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.QuestService.RF.ActionQuest
+            Event:InvokeServer(A_1)
+        end
+    end
+end
+
 local function getNearest()
     local Closest, Distance = nil, 99999
     for _, v in pairs(game:GetService("Workspace").Live.NPCs.Client:GetChildren()) do
         for i,l in pairs(v:GetChildren()) do
               if l:FindFirstChild("Head") then
+                local Mag = (game:GetService("Players").LocalPlayer.Character.Head.Position - v.Head.Position).magnitude
+                if Mag < Distance then
+                Distance = Mag
+                Closest = v
+            end
+        end
+    end
+    end
+    return Closest
+end
+
+local function questNearest()
+    local quest = game:GetService("Players").LocalPlayer.PlayerGui.RightSidebar.Background.Frame.Window.Items.CurrentQuest.ProgressLabel.Text
+    local newText = quest:gsub('[%d%p]', "")
+    local better = newText:gsub('^%s*', "")
+    local Closest, Distance = nil, 99999
+    for i,v in pairs(game:GetService("Workspace").Live.NPCs.Client:GetChildren()) do
+            if v.HumanoidRootPart.NPCTag.NameLabel.Text == better then
+              if v:FindFirstChild("Head") then
                 local Mag = (game:GetService("Players").LocalPlayer.Character.Head.Position - v.Head.Position).magnitude
                 if Mag < Distance then
                 Distance = Mag
@@ -58,6 +88,52 @@ print(v)
 selectedautofarm = v
 end)
 
+tgls:Toggle("Auto-Quest",false, function(state)
+getgenv().aq = state
+
+while aq do 
+    Quest()
+    wait()
+    end
+end)
+
+tgls:Toggle("Auto-Farm Quest(Kill Mobs)",false, function(state)
+getgenv().afq = state
+
+while wait() do
+    if getgenv().afq == true then
+                if selectedautofarm == nil then
+                        Notif("Warn", "You not selected way for Farm", 10)
+                        getgenv().afq = false
+                        break;
+                elseif selectedautofarm == "Moving" then
+                        player.Character.Humanoid:MoveTo(questNearest().HumanoidRootPart.Position)
+                elseif selectedautofarm == "Tween" then
+                        local CFrameEnd = CFrame.new(questNearest().HumanoidRootPart.Position)
+                        local Time = 1
+                        local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
+                        tween:Play()
+                elseif selectedautofarm == "TP" then
+                        player.Character.HumanoidRootPart.CFrame = questNearest().Head.CFrame * CFrame.new(0, 2, 0)
+                elseif getgenv().afq == false then
+                        getgenv().afq = false
+                        break;
+            end
+        end
+    end
+end)
+
+tgls:Button("TP to Quest Mob Spawn(For better farm)", function()
+local quest = game:GetService("Players").LocalPlayer.PlayerGui.RightSidebar.Background.Frame.Window.Items.CurrentQuest.ProgressLabel.Text
+    local newText = quest:gsub('[%d%p]', "")
+    local betterfarm = newText:gsub('^%s*', "")
+    for i,v in pairs(game:GetService("Workspace").Resources.NPCSpawns:GetChildren()) do
+    if v.Name == betterfarm then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Spawn.CFrame
+        end
+    end
+end)
+
 tgls:Toggle("Auto-Farm Nearest",false, function(state)
 getgenv().af = state
 
@@ -83,7 +159,6 @@ while wait() do
     end
     end
 end)
-
 
 tgls:Toggle("Auto-Click",false, function(state)
 getgenv().ac = state
@@ -135,21 +210,6 @@ while wait() do
         end
         end
     end
-end)
-
-tgls:Toggle("Auto-Quest",false, function(state)
-getgenv().aq = state
-
-while aq do 
-    for i,v in pairs(game:GetService("Workspace").Resources.Teleports:GetChildren()) do
-        if v.ClassName == "Folder" then
-            local A_1 = v.Name
-            local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.QuestService.RF.ActionQuest
-            Event:InvokeServer(A_1)
-        wait()
-    end
-end
-end
 end)
 
 local pon = serv:Channel("Upgrades")
