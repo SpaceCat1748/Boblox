@@ -76,6 +76,9 @@ while wait() do
             tween:Play()
         elseif selectedautofarm == "TP" then
             player.Character.HumanoidRootPart.CFrame = getNearest().Head.CFrame * CFrame.new(0, 2, 0)
+        elseif getgenv().af == false then
+               getgenv().af = false
+               break;
         end
     end
     end
@@ -87,66 +90,50 @@ getgenv().ac = state
 
 while wait() do
     if getgenv().ac == true then 
-    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
-    Event:InvokeServer()
     local A_1 = getNearest().Name
     local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
     Event:InvokeServer(A_1)
-    local A_1 = getNearest().Name
-    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
-    Event:InvokeServer(A_1)
-    local A_1 = getNearest().Name
-    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
-    Event:InvokeServer(A_1)
-    local A_1 = getNearest().Name
-    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
-    Event:InvokeServer(A_1)
-    local A_1 = getNearest().Name
-    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
-    Event:InvokeServer(A_1)
-    local A_1 = getNearest().Name
-    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click
-    Event:InvokeServer(A_1)
-    wait()
     end
-    end
+end
 end)
 
 tgls:Toggle("Auto-Collect Coins",false, function(state)
 getgenv().acc = state
 
-while acc do 
-for i,v in pairs(game:GetService("Workspace").Live.Pickups:GetChildren()) do
-    if v.Name == "Currency" then
-        v.CanCollide = true
-        v.CFrame = player.Character.HumanoidRootPart.CFrame
+while wait() do
+    if getgenv().acc == true then 
+        for i,v in pairs(game:GetService("Workspace").Live.Pickups:GetChildren()) do
+            if v.Name == "Currency" then
+                v.CFrame = player.Character.HumanoidRootPart.CFrame
+            end
+        end        
     end
-end
-wait()
 end
 end)
 
 tgls:Toggle("Auto-Ascend",false, function(state)
 getgenv().aa = state
 
-while aa do 
-    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.AscendService.RF.Ascend
-    Event:InvokeServer()
-    wait()
+while wait() do
+    if getgenv().aa == true then 
+        local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.AscendService.RF.Ascend
+        Event:InvokeServer()
+        end
     end
 end)
 
 tgls:Toggle("Auto-Buy Area",false, function(state)
 getgenv().aba = state
 
-while aba do 
-    for i,v in pairs(game:GetService("Workspace").Resources.Teleports:GetChildren()) do
-        if v.ClassName == "Folder" then
-            local A_1 = v.Name
-            game:GetService("ReplicatedStorage").Packages.Knit.Services.AreaService.RF.BuyArea:InvokeServer(A_1)
+while wait() do
+    if getgenv().aba == true then 
+        for i,v in pairs(game:GetService("Workspace").Resources.Teleports:GetChildren()) do
+            if v.ClassName == "Folder" then
+                local A_1 = v.Name
+                game:GetService("ReplicatedStorage").Packages.Knit.Services.AreaService.RF.BuyArea:InvokeServer(A_1)
+            end
         end
-    end
-    wait()
+        end
     end
 end)
 
@@ -167,19 +154,6 @@ end)
 
 local pon = serv:Channel("Upgrades")
 
-areaTable = {}
-for _,v in pairs(game:GetService("Workspace").Resources.Teleports:GetChildren()) do
-   if not table.find(areaTable, v.Name) then
-       table.insert(areaTable, v.Name)
-   end
-end
-
-local selectedarea
-local drop = pon:Dropdown("Pick Area", areaTable, function(v)
-print(v)
-selectedarea = v
-end)
-
 local selectedupg
 local drop = pon:Dropdown("Pick Upgrade", {"Crit Multiplier", "More Storage", "WalkSpeed", "Crit Chance", "Power Gain"} , function(v)
 print(v)
@@ -190,19 +164,23 @@ pon:Toggle("Auto-Upgrade",false, function(state)
 getgenv().au = state
 
 while au do
-   if selectedarea == nil or selectedupg == nil then
-        Notif("Warn", "You something not selected", 10)
+   if selectedupg == nil then
+        Notif("Warn", "You not selected Upgrade", 10)
         getgenv().au = false
         break;
      
    else
-        local A_1 = selectedarea
-        local A_2 = selectedupg
-        local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.UpgradeService.RF.Upgrade
-        Event:InvokeServer(A_1, A_2)
-        wait()
+        for i,v in pairs(game:GetService("Workspace").Resources.Teleports:GetChildren()) do
+            if v.ClassName == "Folder" then
+                local A_1 = v.Name
+                local A_2 = selectedupg
+                local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.UpgradeService.RF.Upgrade
+                Event:InvokeServer(A_1, A_2)
+                wait()
+            end
         end
     end
+end
 end)
 
 
@@ -253,14 +231,14 @@ egg:Toggle("Auto-Forge",false, function(state)
 getgenv().af = state
 
 while af do
-    for i,v in pairs(game:GetService("Players").NekitPro139.PlayerGui.WeaponInv.Background.ImageFrame.Window.WeaponHolder.WeaponScrolling:GetChildren()) do
+    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.WeaponInv.Background.ImageFrame.Window.WeaponHolder.WeaponScrolling:GetChildren()) do
         if v.ClassName == "Frame" then
             local A_1 = v.Name
             local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ForgeService.RF.Forge
             Event:InvokeServer(A_1)
-      end
-      end
-    wait()
+            end
+        end
+        wait()
     end
 end)
 
@@ -290,4 +268,12 @@ game:GetService("UserInputService").JumpRequest:connect(function()
 		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
 	end
 end)
+end)
+
+textbs:Button("Remove Water Damage", function()
+for i,v in pairs(game:GetService("Workspace").WATER:GetDescendants()) do
+    if v.Name == "TouchInterest" then
+       v:Destroy(v)
+    end
+end
 end)
