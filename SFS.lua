@@ -88,32 +88,27 @@ print(v)
 selectedautofarm = v
 end)
 
-tgls:Toggle("Auto-Quest",false, function(state)
-getgenv().aq = state
-
-while aq do 
-    Quest()
-    wait()
-    end
-end)
-
 tgls:Toggle("Auto-Farm Quest(Kill Mobs)",false, function(state)
 getgenv().afq = state
 
 while wait() do
     if getgenv().afq == true then
+                Quest()
                 if selectedautofarm == nil then
                         Notif("Warn", "You not selected way for Farm", 10)
                         getgenv().afq = false
                         break;
                 elseif selectedautofarm == "Moving" then
+                        Quest()
                         player.Character.Humanoid:MoveTo(questNearest().HumanoidRootPart.Position)
                 elseif selectedautofarm == "Tween" then
+                        Quest()
                         local CFrameEnd = CFrame.new(questNearest().HumanoidRootPart.Position)
                         local Time = 1
                         local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
                         tween:Play()
                 elseif selectedautofarm == "TP" then
+                        Quest()
                         player.Character.HumanoidRootPart.CFrame = questNearest().Head.CFrame * CFrame.new(0, 2, 0)
                 elseif getgenv().afq == false then
                         getgenv().afq = false
@@ -128,10 +123,13 @@ local quest = game:GetService("Players").LocalPlayer.PlayerGui.RightSidebar.Back
     local newText = quest:gsub('[%d%p]', "")
     local betterfarm = newText:gsub('^%s*', "")
     for i,v in pairs(game:GetService("Workspace").Resources.NPCSpawns:GetChildren()) do
-    if v.Name == betterfarm then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Spawn.CFrame
+       local pon = string.find(betterfarm, v.Name)
+        if pon == 1 or 8 then
+             if v.Name == betterfarm then
+                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Spawn.CFrame
         end
     end
+end
 end)
 
 tgls:Toggle("Auto-Farm Nearest",false, function(state)
@@ -254,23 +252,36 @@ for _,v in pairs(game:GetService("Workspace").Resources.EggStands:GetChildren())
 end
 
 local selectedegg
-local drop = egg:Dropdown("Pick Egg", itemTable, function(v)
+local drop = egg:Dropdown("Pick Egg", itemTable, function(value)
 print(v)
-selectedegg = v
+selectedegg = value
 end)
 
 
 egg:Toggle("Auto-Buy 1 Egg",false, function(state)
 getgenv().abe = state
 
-while abe do
-    local A_1 = selectedegg
-    local A_2 = 1
-    local A_3 = false
-    local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.EggService.RF.BuyEgg
-    Event:InvokeServer(A_1, A_2, A_3)
-    wait()
+while wait() do
+    if getgenv().abe == true then
+        if selectedegg == nil then
+            Notif("Warn", "You not selected Egg", 10)
+            getgenv().abe = false
+            break;
+        else
+            for i,v in pairs(game:GetService("Workspace").Resources.Eggs:GetChildren()) do
+                if v.Name == selectedegg then   
+                   player.Character.HumanoidRootPart.CFrame = v.CFrame
+                end
+            end
+            local A_1 = selectedegg
+            local A_2 = 1
+            local A_3 = false
+            local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.EggService.RF.BuyEgg
+            Event:InvokeServer(A_1, A_2, A_3)
+        wait()
     end
+end
+end
 end)
 
 egg:Label("Pets")
@@ -334,6 +345,16 @@ textbs:Button("Remove Water Damage", function()
 for i,v in pairs(game:GetService("Workspace").WATER:GetDescendants()) do
     if v.Name == "TouchInterest" then
        v:Destroy(v)
+    end
+end
+end)
+
+textbs:Button("Claim C", function()
+for i,v in pairs(game:GetService("Workspace").Live.Chests:GetChildren()) do
+    if v.ClassName == "Model" then
+        local A_1 = v.Name
+        local Event = game:GetService("ReplicatedStorage").Packages.Knit.Services.ChestService.RF.ClaimChest
+        Event:InvokeServer(A_1)
     end
 end
 end)
