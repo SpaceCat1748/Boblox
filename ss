@@ -148,11 +148,7 @@ while wait() do
 end
 end)
 
-tgls:Toggle("Auto-Farm Gummies",false, function(state)
-    getgenv().as = state
-    
-while wait() do
-    if getgenv().as == true then
+tgls:Button("Find Gummies", function()
         for i,v in pairs(game:GetService("Workspace").Gummies:GetChildren()) do
             if v.ClassName == 'Model' then
                 local A_1 = "Found"
@@ -164,8 +160,6 @@ while wait() do
                 Event:FireServer(A_1, A_2)
             end
         end
-    end
-end
 end)
 
 eggsTable = {}
@@ -179,18 +173,42 @@ end
 tgls:Toggle("Auto-Sell",false, function(state)
     getgenv().as = state
     
-while wait(5) do
+while wait() do
     if getgenv().as == true then
-        game:GetService("Workspace").Map.SellSnow.SellSnow.Prompt.Detector.CanCollide = true
-        game:GetService("Workspace").Map.SellSnow.SellSnow.Prompt.Detector.Anchored = true
-        game:GetService("Workspace").Map.SellSnow.SellSnow.Prompt.Detector.Transparency = 1
-        game:GetService("Workspace").Map.SellSnow.SellSnow.Prompt.Detector.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        local A_1 = "SellSnow"
+        local A_2 = 
+        {
+	        ["Amount"] = game:GetService("Players").LocalPlayer.leaderstats.Snow.Value
+        }
+        local Event = game:GetService("ReplicatedStorage").SpecWork.Shared.Network.Shop
+        Event:InvokeServer(A_1, A_2)
     elseif getgenv().as == false then
         getgenv().as = false
         break;
     end
 end
 end)
+
+tgls:Toggle("Auto-Sell when full",false, function(state)
+    getgenv().aswf = state
+    
+while aswf do
+        local ok = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.SnowBar.Main.Amount.Text
+        local pon = ok:gsub("%d+/", "")
+ 
+        if game:GetService("Players").LocalPlayer.leaderstats.Snow.Value == tonumber(pon) then
+            local A_1 = "SellSnow"
+            local A_2 = 
+            {
+              ["Amount"] = game:GetService("Players").LocalPlayer.leaderstats.Snow.Value
+            }
+            local Event = game:GetService("ReplicatedStorage").SpecWork.Shared.Network.Shop
+            Event:InvokeServer(A_1, A_2)
+        end
+        wait()
+end
+end)
+
 
 local function boots()
     for i,v in pairs(game:GetService("ReplicatedStorage").Accessories.Boots:GetChildren()) do
