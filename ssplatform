@@ -1,3 +1,5 @@
+local selected;
+
 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort") then
 	game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort"):Remove()
 end
