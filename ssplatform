@@ -1,0 +1,53 @@
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort") then
+	game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort"):Remove()
+end
+if game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPortNew") then
+	game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPortNew"):Remove()
+end
+
+if game:GetService("Players").LocalPlayer.Character.Head:FindFirstChild("RankingGui") then
+   game:GetService("Players").LocalPlayer.Character.Head:FindFirstChild("RankingGui"):Remove()
+end --antiban
+
+local function Chunk()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(203.59304809570312, -167.9051971435547, -1186.966064453125)
+    wait(0)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(819.7440185546875, -197.41392517089844, -1170.477783203125)
+    wait(0)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1295.8575439453125, -203.35142517089844, -1213.936767578125)
+    wait(0)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8941.1689453125, 6261.66015625, 1772.10107421875)
+end
+
+Chunk()
+
+local part = Instance.new("Part",workspace)
+    part.Name = "PLATFORM"
+    
+    part.Size = Vector3.new(100,0.5,100)
+    part.Transparency = 0
+    part.Anchored = true 
+    part.Material = Enum.Material.SmoothPlastic
+    part.TopSurface = Enum.SurfaceType.Smooth
+    part.BottomSurface = Enum.SurfaceType.Smooth
+    
+    part.Position = Vector3.new(15,10,0)
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4.238365650177002, 13.248025894165039, 0.18100240826606750)
+
+while pf do
+for i, v in pairs(game:GetService("Workspace").Mobs:GetChildren()) do
+    if string.find(v.Name, selected) then
+       v.HumanoidRootPart.CanCollide = true
+       v.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+       for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do 
+           if v.ClassName == "Tool" then 
+              game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+           end
+       end
+       game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").RemoteClick:FireServer()
+       game:GetService("ReplicatedStorage").Events.Clicked:FireServer()
+             end
+         end
+wait()
+end
