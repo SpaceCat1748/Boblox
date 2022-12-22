@@ -37,7 +37,7 @@ game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4.23836
 
 while pf do
 for i, v in pairs(game:GetService("Workspace").Mobs:GetChildren()) do
-    if string.find(v.Name, getgenv().Element) then
+    if string.find(v.Name, _G.Element) then
        v.HumanoidRootPart.CanCollide = true
        v.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
        for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do 
