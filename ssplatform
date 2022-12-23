@@ -1,6 +1,5 @@
-getgenv().pf = true; -- true - on, false - off
+getgenv().pf = false; -- true - on, false - off
 local selected = "Fire"; --Element
-
 
 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort") then
 	game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort"):Remove()
@@ -15,16 +14,16 @@ end --antiban
 
 local function Chunk()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(203.59304809570312, -167.9051971435547, -1186.966064453125)
-    wait(0)
+    wait(1)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(819.7440185546875, -197.41392517089844, -1170.477783203125)
-    wait(0)
+    wait(1)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1295.8575439453125, -203.35142517089844, -1213.936767578125)
-    wait(0)
+    wait(1)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8941.1689453125, 6261.66015625, 1772.10107421875)
 end
 
 Chunk()
-
+wait(5)
 local part = Instance.new("Part",workspace)
     part.Name = "PLATFORM"
     
