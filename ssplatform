@@ -41,8 +41,9 @@ game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4.23836
 while pf do
 for i, v in pairs(game:GetService("Workspace").Mobs:GetChildren()) do
     if string.find(v.Name, selected) then
+       v.HumanoidRootPart.Anchored = true
        v.HumanoidRootPart.CanCollide = true
-       v.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+       v.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,-5)
        for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do 
            if v.ClassName == "Tool" then 
               game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
