@@ -1,4 +1,4 @@
-getgenv().pf = false; -- true - on, false - off
+getgenv().pf = true; -- true - on, false - off
 local selected = "Fire"; --Element
 
 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("AntiPort") then
