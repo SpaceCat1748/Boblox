@@ -40,7 +40,7 @@ getgenv().autocandy = state
 while autocandy do
     player.Character.Humanoid:ChangeState("11")
     for i,v in pairs(game:GetService("Workspace").CandyHolder:GetChildren()) do
-        if v.Name == "Candy" then
+        if v.Name == "CandyCane" then
             local CFrameEnd = CFrame.new(v.Position)
             local Time = 1.5
             local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
