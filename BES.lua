@@ -117,7 +117,7 @@ end)
 
 local msc = serv:Channel("Misc")
 
-mscaa:Button("Infinity Jumps", function()
+msc:Button("Infinity Jumps", function()
 local InfiniteJumpEnabled = true
 game:GetService("UserInputService").JumpRequest:connect(function()
 	if InfiniteJumpEnabled then
