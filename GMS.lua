@@ -48,12 +48,12 @@ end)
 end)
 
 auf:Toggle("Safe Farm",false, function(state)
-getgenv().af = state
+getgenv().safe = state
 
 player.Character.HumanoidRootPart.CFrame = game:GetService("Workspace"):FindFirstChild("BS").CFrame * CFrame.new(0,10,0)
 
 game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().af == true then
+    if getgenv().safe == true then
         for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
             if v:FindFirstChild("weightClientScript") then
                 game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(v)
