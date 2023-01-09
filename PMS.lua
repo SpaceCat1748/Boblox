@@ -194,7 +194,11 @@ end)
 
 
 msc:Textbox("WalkSpeed", "Type here!", true, function(v)
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+
+game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal('WalkSpeed'):Connect(function()
      game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
 end)
 
 
