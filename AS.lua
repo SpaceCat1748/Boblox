@@ -43,13 +43,13 @@ print(v)
 selectednpc = v
 end)
 
-auf:Toggle("Auto-Farm NPC(use animal)",false, function(state)
+auf:Toggle("Auto-Farm NPC",false, function(state)
 getgenv().farmnpc = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
     if getgenv().farmnpc == true then
         VirtualInputManager:SendKeyEvent(true,"Q",false,uwu)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").NPC[selectednpc].HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").NPC[selectednpc].HumanoidRootPart.CFrame * CFrame.new(0,-5,0)
     end
 end)
 end)
