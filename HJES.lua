@@ -87,7 +87,7 @@ print(v)
 selectedegg = v
 end)
 
-egg:Toggle("Auto-Farm Selected Tower",false, function(state)
+egg:Toggle("Auto-Buy Egg",false, function(state)
 getgenv().egg = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
