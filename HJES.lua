@@ -37,7 +37,7 @@ getgenv().coin = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
     if getgenv().coin == true then
-       game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["__MAP"].Towers[selectedtower].Win.Button.CFrame
+       game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["__MAP"].Towers[selectedtower].Win.Roof.CFrame * CFrame.new(0,3,0)
     end
 end)
 end)
