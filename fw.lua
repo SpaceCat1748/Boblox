@@ -1,4 +1,3 @@
-getgenv().esp = false;
 
 function ESP()
 for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
