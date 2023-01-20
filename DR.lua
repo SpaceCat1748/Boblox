@@ -47,6 +47,17 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 end)
 
+auf:Toggle("Auto-Rebirth",false, function(state)
+getgenv().Rebirth = state
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if getgenv().Rebirth == true then
+        local Event = game:GetService("ReplicatedStorage").Remote.Event.Rebirth["[C-S]TryBuyRebirth"]
+        Event:FireServer()
+    end
+end)
+end)
+
 auf:Button("TP to Finish", function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Success.CFrame
 end)
