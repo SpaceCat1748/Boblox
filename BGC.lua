@@ -80,24 +80,24 @@ game:GetService("RunService").RenderStepped:Connect(function()
     end)
 end)
 
-auf:Toggle("Auto-Sell",false, function(state)
+auf:Toggle("Auto-Sell x2",false, function(state)
 getgenv().sell = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
     if getgenv().sell == true then
-        local A_1 = 
-        {
-            [1] = 
-        {
-            [1] = false
-        }, 
-            [2] = 
-        {
-            [1] = 2
-        }
-        }
-        local Event = game:GetService("ReplicatedStorage").Remotes["sell bubbles"]
-        Event:FireServer(A_1)
+local A_1 = 
+{
+	[1] = 
+{
+	[1] = true
+}, 
+	[2] = 
+{
+	[1] = false
+}
+}
+local Event = game:GetService("ReplicatedStorage").Remotes["sell bubbles"]
+Event:FireServer(A_1)
         end
     end)
 end)
@@ -122,6 +122,9 @@ game:GetService("RunService").RenderStepped:Connect(function()
                 }
                 local Event = game:GetService("ReplicatedStorage").Remotes["redeem free gift"]
                 Event:InvokeServer(A_1)
+                for i,v in pairs(game:GetService("Workspace").Stuff.Lootbags:GetChildren()) do
+                    v["Meshes/Bag_Cylinder (1)"].CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                end
             end
         end
     end)
