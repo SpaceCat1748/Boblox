@@ -182,6 +182,73 @@ Event:FireServer(A_1)
     end)
 end)
 
+egg:Label("These are auto-delete buttons")
+egg:Label("if you want to disable, just press again")
+
+egg:Button("Auto-Delete Basic Pets", function()
+local A_1 = 
+{
+	[1] = 
+{
+	[1] = "Basic"
+}, 
+	[2] = 
+{
+	[1] = false
+}
+}
+local Event = game:GetService("ReplicatedStorage").Remotes["auto delete setting"]
+Event:FireServer(A_1)
+end)
+
+egg:Button("Auto-Delete Rare Pets", function()
+local A_1 = 
+{
+	[1] = 
+{
+	[1] = "Rare"
+}, 
+	[2] = 
+{
+	[1] = false
+}
+}
+local Event = game:GetService("ReplicatedStorage").Remotes["auto delete setting"]
+Event:FireServer(A_1)
+end)
+
+egg:Button("Auto-Delete Epic Pets", function()
+local A_1 = 
+{
+	[1] = 
+{
+	[1] = "Epic"
+}, 
+	[2] = 
+{
+	[1] = false
+}
+}
+local Event = game:GetService("ReplicatedStorage").Remotes["auto delete setting"]
+Event:FireServer(A_1)
+end)
+
+egg:Button("Auto-Delete Legendary Pets", function()
+local A_1 = 
+{
+	[1] = 
+{
+	[1] = "Legendary"
+}, 
+	[2] = 
+{
+	[1] = false
+}
+}
+local Event = game:GetService("ReplicatedStorage").Remotes["auto delete setting"]
+Event:FireServer(A_1)
+end)
+
 
 local tp = serv:Channel("TP")
 
