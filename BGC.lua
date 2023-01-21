@@ -65,10 +65,10 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 end)
 
-auf:Toggle("Auto-Collect Coins and Gems",false, function(state)
+auf:Toggle("Auto-Collect Coins, Gems, Orbs",false, function(state)
 getgenv().Collect = state
 
-game:GetService("RunService").RenderStepped:Connect(function()
+while wait() do
     if getgenv().Collect == true then
             for i,v in pairs(game:GetService("Workspace").Stuff.Pickups:GetDescendants()) do
                 if v.Name == "TouchInterest" then
@@ -77,7 +77,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
                 end
             end
         end
-    end)
+    end
 end)
 
 auf:Toggle("Auto-Sell x2",false, function(state)
@@ -194,6 +194,12 @@ end)
 
 
 local msc = serv:Channel("Misc")
+
+msc:Button("Collect Chests", function()
+for i,v in pairs(game:GetService("Workspace").MAP.Chests:GetChildren()) do
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+end
+end)
 
 msc:Textbox("WalkSpeed", "Type here!", true, function(v)
 getgenv().walk = v
