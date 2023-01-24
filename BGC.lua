@@ -66,48 +66,57 @@ end)
 end)
 
 auf:Toggle("Auto-Collect Coins, Gems, Orbs",false, function(state)
-getgenv().Collect = state
+getgenv().Collectc = state
 
 while wait() do
-    if getgenv().Collect == true then
-            for i,v in pairs(game:GetService("Workspace").Stuff.Pickups:GetDescendants()) do
-                if v.Name == "TouchInterest" then
-                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
-                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
-                end
+    if getgenv().Collectc == true then
+            for i,v in pairs(game:GetService("Workspace").Stuff.Pickups:GetChildren()) do
+               game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.POS.CFrame
+            local args = {
+                [1] = {
+                    [1] = {
+                        [1] = v.Name
+                            },
+                        [2] = {
+                        [1] = false
+                        }
+                    }
+                }
+                game:GetService("ReplicatedStorage").Remotes["collect pickup"]:FireServer(unpack(args))
             end
         end
     end
 end)
 
 auf:Toggle("Auto-Sell x2",false, function(state)
-getgenv().sell = state
+getgenv().sellx2 = state
 
-game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().sell == true then
-local A_1 = 
-{
-	[1] = 
-{
-	[1] = true
-}, 
-	[2] = 
-{
-	[1] = false
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").MAP.Activations["Sell 2"].CFrame 
+
+while wait() do
+    if getgenv().sellx2 == true then
+local args = {
+    [1] = {
+        [1] = {
+            [1] = true
+        },
+        [2] = {
+            [1] = false
+        }
+    }
 }
-}
-local Event = game:GetService("ReplicatedStorage").Remotes["sell bubbles"]
-Event:FireServer(A_1)
+
+game:GetService("ReplicatedStorage").Remotes["sell bubbles"]:FireServer(unpack(args))
         end
-    end)
+    end
 end)
 
 
 auf:Toggle("Auto-Collect Gifts",false, function(state)
-getgenv().cg = state
+getgenv().colg = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().cg == true then
+    if getgenv().colg == true then
             for i = 1,12 do
                 local A_1 = 
                 {
@@ -123,7 +132,8 @@ game:GetService("RunService").RenderStepped:Connect(function()
                 local Event = game:GetService("ReplicatedStorage").Remotes["redeem free gift"]
                 Event:InvokeServer(A_1)
                 for i,v in pairs(game:GetService("Workspace").Stuff.Lootbags:GetChildren()) do
-                    v["Meshes/Bag_Cylinder (1)"].CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    v["Meshes/Bag_Cylinder (1)"].CanCollide = false
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v["Meshes/Bag_Cylinder (1)"].CFrame
                 end
             end
         end
@@ -264,7 +274,11 @@ local msc = serv:Channel("Misc")
 
 msc:Button("Collect Chests", function()
 for i,v in pairs(game:GetService("Workspace").MAP.Chests:GetChildren()) do
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+    if v.ClassName == "MeshPart" then
+        if not string.find(v.Name, "VIP") then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+        end
+    end 
 end
 end)
 
