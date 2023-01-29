@@ -36,7 +36,7 @@ local serv = win:Server("gui", "")
 
 local auf = serv:Channel("Farm")
 
-auf:Toggle("Auto-Farm(equip tool)",false, function(state)
+auf:Toggle("Auto-Farm(equip tool on 3)",false, function(state)
 getgenv().af = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
