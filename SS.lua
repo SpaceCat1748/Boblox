@@ -23,14 +23,26 @@ local serv = win:Server("gui", "")
 
 local auf = serv:Channel("Farm")
 
-auf:Toggle("Auto-Farm",false, function(state)
-getgenv().afarm = state
+auf:Toggle("Auto-Join in Dungeon",false, function(state)
+getgenv().Join = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().afarm == true then
+    if getgenv().Join == true then
+        if game:GetService("Players").LocalPlayer.PlayerGui.Wave.Enabled == false then
+            game.Players.LocalPlayer.Character.Humanoid:MoveTo(game:GetService("Workspace").Dungeons["1"].Party.Region.Position)
+        end
+    end
+end)
+end)
+
+auf:Toggle("Auto-Farm",false, function(state)
+getgenv().farm = state
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if getgenv().farm == true then
         for i,v in pairs(game:GetService("Workspace").Mobs:GetChildren()) do
             if v:FindFirstChild("HumanoidRootPart") then
-                v.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,-4)
+                v.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,-10)
             end
         end
     end
@@ -38,10 +50,10 @@ end)
 end)
 
 auf:Toggle("Auto-Attack",false, function(state)
-getgenv().Attack = state
+getgenv().aAttack = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().Attack == true then
+    if getgenv().aAttack == true then
         local Event = game:GetService("ReplicatedStorage").EventStorage.Attack
         Event:InvokeServer()
     end
