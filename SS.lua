@@ -24,13 +24,13 @@ local serv = win:Server("gui", "")
 local auf = serv:Channel("Farm")
 
 auf:Toggle("Auto-Farm",false, function(state)
-getgenv().farm = state
+getgenv().afarm = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().farm == true then
+    if getgenv().afarm == true then
         for i,v in pairs(game:GetService("Workspace").Mobs:GetChildren()) do
             if v:FindFirstChild("HumanoidRootPart") then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,10,2)
+                v.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,-4)
             end
         end
     end
