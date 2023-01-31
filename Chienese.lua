@@ -131,16 +131,6 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 end)
 
-auf:Toggle("Auto-Rebirth", false, function(state)
-getgenv().rebirth = state
-
-game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().rebirth == true then
-        game:GetService("ReplicatedStorage").Remotes.Rebirth:FireServer()
-    end
-end)
-end)
-
 local egg = serv:Channel("Heroes")
 
 local selectedegg
