@@ -108,25 +108,6 @@ game:GetService("ReplicatedStorage").Remotes.Server:FireServer(unpack(args))
     end)
 end)
 
-auf:Toggle("Auto-Claim Rewards",false, function(state)
-getgenv().Rewards = state
-
-game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().Rewards == true then
-for i = 1,10 do
-local args = {
-    [1] = {
-        [1] = "DailyRewards",
-        [2] = i
-    }
-}
-
-game:GetService("ReplicatedStorage").Remotes.Server:FireServer(unpack(args))
-end
-        end
-    end)
-end)
-
 local egg = serv:Channel("Eggs")
 
 local selectedegg
