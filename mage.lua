@@ -109,15 +109,6 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 end)
 
-local args = {
-            [1] = CFrame.new(getNearest().Character.HumanoidRootPart.Position, getNearest().Character.HumanoidRootPart.Position)
-        }
-
-        game:GetService("ReplicatedStorage").Events.Use_Spell:FireServer(unpack(args))
-    end
-end)
-end)
-
 local msc = serv:Channel("Misc")
 
 msc:Textbox("WalkSpeed", "Type here!", true, function(v)
