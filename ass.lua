@@ -11,6 +11,14 @@ for _,v in pairs(game:GetService("Workspace")["_EGGS"]:GetChildren()) do
     end
 end
 
+mobTable = {}
+for _,v in pairs(game:GetService("Workspace")["_ENEMIES"]:GetChildren()) do
+    for i,l in pairs(v:GetChildren()) do
+        if not table.find(mobTable, l.Name) then
+            table.insert(mobTable, l.Name)
+        end
+    end
+end
 
 local ok = {"Moving", "Tween", "TP"}
 
@@ -65,6 +73,58 @@ print(v)
 selectedautofarm = v
 end)
 
+local selectedmob
+local drop = auf:Dropdown("Select Mob", mobTable, function(v)
+print(v)
+selectedmob = v
+end)
+
+local function getNearestMob()
+    local Closest, Distance = nil, 99999
+    for _, v in pairs(game:GetService("Workspace")["_ENEMIES"]:GetChildren()) do
+          for i,l in pairs(v:GetChildren()) do
+              if l.Name == selectedmob then
+                if l["_stats"]["current_hp"].Value ~= 0 then
+                    local Mag = (game:GetService("Players").LocalPlayer.Character.Head.Position - l.Head.Position).magnitude
+                        if Mag < Distance then
+                            Distance = Mag
+                            Closest = l
+                        end
+                    end
+                end
+            end
+        end
+    return Closest
+end
+
+auf:Toggle("Auto-Farm Mob",false, function(state)
+getgenv().Farmmobv1 = state
+
+while wait() do
+    if getgenv().Farmmobv1 == true then
+        if selectedautofarm == nil then
+            Notif("Warn", "You not selected way for Farm", 10)
+            getgenv().Farmmobv1 = false
+            break;
+        elseif selectedautofarm == "Moving" then
+            player.Character.Humanoid:MoveTo(getNearestMob().HumanoidRootPart.Position)
+        elseif selectedautofarm == "Tween" then
+            local CFrameEnd = CFrame.new(getNearestMob().HumanoidRootPart.Position)
+            local Time = 1
+            local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
+            tween:Play()
+        elseif selectedautofarm == "TP" then
+            player.Character.HumanoidRootPart.CFrame = getNearestMob().HumanoidRootPart.CFrame
+        elseif getgenv().Farmmobv1 == false then
+               getgenv().Farmmobv1 = false
+               break;
+            end
+        end
+    end
+end)
+
+auf:Label("or")
+
 auf:Toggle("Auto-Farm Nearest",false, function(state)
 getgenv().Faarm = state
 
@@ -100,6 +160,22 @@ local args = {
     [1] = {
         [1] = "Hit",
         [2] = getNearest()
+    }
+}
+
+game:GetService("ReplicatedStorage").Remotes.Server:FireServer(unpack(args))
+        end
+    end)
+end)
+
+auf:Toggle("Auto-Quest",false, function(state)
+getgenv().Quest = state
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if getgenv().Quest == true then
+local args = {
+    [1] = {
+        [1] = "Quest"
     }
 }
 
