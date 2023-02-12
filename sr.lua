@@ -131,16 +131,6 @@ game:GetService("ReplicatedStorage").Remote.Function.Luck["[C-S]DoLuck"]:InvokeS
 end
 end)
 
-egg:Toggle("Auto-Equip Best", false, function(state)
-getgenv().Best = state
-
-while wait() do
-    if getgenv().Best == true then
-        game:GetService("ReplicatedStorage").Remote.Event.Pet["[C-S]TryEquipBest"]:FireServer()
-    end
-end
-end)
-
 
 local msc = serv:Channel("Misc")
 
