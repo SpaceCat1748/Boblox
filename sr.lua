@@ -48,24 +48,24 @@ firetouchinterest(game.Players.LocalPlayer.Character.Head, game:GetService("Work
 end)
 
 local selectedrace
-local drop = auf:Dropdown("Pick Egg", farmTable, function(v)
+local drop = auf:Dropdown("Pick Win for Farm", farmTable, function(v)
 print(v)
 selectedrace = v
 end)
 
 auf:Toggle("Auto-Farm Win",false, function(state)
-getgenv().afw7 = state
+getgenv().afw12 = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().afw7 == true then
+    if getgenv().afw12 == true then
        if game:GetService("Workspace").GameInfo.GameType.Value == "Race" then
             for i,v in pairs(game:GetService("Workspace").Walls:GetChildren()) do
                 if v.win.Value == selectedrace then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v:FindFirstChildOfClass("Part").CFrame
-                    wait(1)
-                    game.Players.LocalPlayer.Character.Humanoid.Health = 0
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v:FindFirstChildOfClass("Part").CFrame * CFrame.new(0,-5,0)
                 end
             end
+            game.Players.LocalPlayer.Character.Humanoid.Health = 0
+            game.Players.LocalPlayer.Character:BreakJoints()
         end
     end
 end)
