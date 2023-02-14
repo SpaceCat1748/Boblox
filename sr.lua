@@ -54,14 +54,15 @@ selectedrace = v
 end)
 
 auf:Toggle("Auto-Farm Win",false, function(state)
-getgenv().afw = state
+getgenv().afw7 = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
-    if getgenv().afw == true then
+    if getgenv().afw7 == true then
        if game:GetService("Workspace").GameInfo.GameType.Value == "Race" then
             for i,v in pairs(game:GetService("Workspace").Walls:GetChildren()) do
                 if v.win.Value == selectedrace then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v:FindFirstChildOfClass("Part").CFrame * CFrame.new(0,0,15)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v:FindFirstChildOfClass("Part").CFrame
+                    wait(1)
                     game.Players.LocalPlayer.Character.Humanoid.Health = 0
                 end
             end
