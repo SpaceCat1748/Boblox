@@ -194,24 +194,6 @@ game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_k
 end
 end)
 
-egg:Toggle("Auto-Equip Best Warriors", false, function(state)
-getgenv().best = state
-
-while wait() do
-    if getgenv().best == true then
-local args = {
-    [1] = {
-        [1] = {
-            [1] = "\25"
-        }
-    }
-}
-
-game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
-    end
-end
-end)
-
 local msc = serv:Channel("Misc")
 
 msc:Textbox("WalkSpeed", "Type here!", true, function(v)
@@ -225,7 +207,6 @@ getgenv().walk1 = state
 
 game:GetService("RunService").RenderStepped:Connect(function()
     if getgenv().walk1 == true then
-        game:GetService("Players").LocalPlayer.Speed = getgenv().walk
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().walk
     elseif getgenv().walk1 == false then
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
