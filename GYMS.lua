@@ -35,6 +35,7 @@ for i,v in pairs(game:GetService("Players").LocalPlayer.Gamepasses:GetChildren()
         v.Value = true
     end
 end
+wait(0.5)
 game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end)
 
