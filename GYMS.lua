@@ -35,6 +35,7 @@ for i,v in pairs(game:GetService("Players").LocalPlayer.Gamepasses:GetChildren()
         v.Value = true
     end
 end
+game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end)
 
 auf:Toggle("Auto-Weight",false, function(state)
